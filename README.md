@@ -15,6 +15,7 @@ FinManager działa w oparciu o technologie webowe, w szczególności framework V
 >   * Widok rejestracji
 >   * Widok strony głównej
 >   * Widok profilu użytkownika
+>   * Widok portfela użytkownika
 >   * Widok symulacji giełdowej
 >   * Widok bazy wiedzy
 >   * Widok informacji o aplikacji
@@ -24,11 +25,14 @@ FinManager działa w oparciu o technologie webowe, w szczególności framework V
 >   * Rejestracja konta użytkownika
 >   * Konfiguracja konta użytkownika
 >   * **Symulacja giełdowa**
->       * Wyświetlenie posiadanych papierów i ich wartości na ekranie głównym
->       * Kalkulowanie strat/zysków na obecną chwilę
 >       * Wyświetlenie szczegółów o konkretnym papierze wartościowym wraz z wykresem ceny
 >       * Możliwość kupna lub sprzedaży określonego papieru wartościowego
 >       * Możliwość wyboru pomiędzy kilkoma kategoriami papierów wartościowych
+>       * Ustalenie dolnego lub górnego limitu kwoty którego osiągniecie skutkuje powiadomieniem
+>   * **Portfel użytkownika**
+>       * Wyświetlenie posiadanych środków pieniężnych
+>       * Kalkulowanie strat/zysków w określonym przedziale czasowym
+>       * Wyświetlenie historii transakcji w określonych datach
 >   * **Baza wiedzy**
 >       * Przeprowadzenie użytkownika przez samouczek korzystania z symulacji i grania na giełdzie
 >       * Wyświetlenie użytkownikowi informacji na dany temat dotyczący giełdy
