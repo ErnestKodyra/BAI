@@ -2,7 +2,7 @@
 </script>
 
 <template>
-    <h1>Pusta aplikacja Vue 3</h1>
+    <h1>Test</h1>
 </template>
 
 <style scoped>
