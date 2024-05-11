@@ -1,7 +1,7 @@
 {
-  "name": "empty-vue",
-  "private": true,
+  "name": "uek-bai-project",
   "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,12 +9,11 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "anychart": "^8.12.1",
     "vue": "^3.4.21"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.1.6",
-    "vite-plugin-mkcert": "^1.17.4"
+    "vite": "^5.2.8"
   }
-  
 }
