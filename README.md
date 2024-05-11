@@ -32,5 +32,3 @@ Aplikacja działa w oparciu o technologie webowe, w szczególności framework Vu
 >       * Wyświetlanie listy dostępnych papierów wartościowych
 >       * Wyświetlanie szczegółów o konkretnym papierze wartościowym wraz z wykresem na żywo ceny
 >       * Możliwość kupna lub sprzedaży określonego papieru wartościowego
->       * Możliwość wyboru pomiędzy kilkoma kategoriami papierów wartościowych
->       * Ustalenie dolnego lub górnego limitu kwoty którego osiągniecie skutkuje powiadomieniem
