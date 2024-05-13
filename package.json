@@ -1,22 +1,16 @@
 {
-  "name": "uek-bai-project",
-  "version": "0.0.0",
-  "private": true,
+  "name": "testingbai",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "anychart": "^8.12.1",
-    "axios": "^1.6.8",
-    "vue": "^3.4.21",
-    "vue-router": "^4.3.2",
-    "vuex": "^4.1.0"
-  },
-  "devDependencies": {
-    "@vitejs/plugin-vue": "^5.0.4",
-    "vite": "^5.2.8"
+    "express": "^4.19.2"
   }
 }

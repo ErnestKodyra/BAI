@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+
+const usersRouter = express.Router();
 
 let users = [
     { id: 1, username: 'user1', password: 'pass1', email: 'user1@example.com' },
     { id: 2, username: 'user2', password: 'pass2', email: 'user2@example.com' },
 ];
 
-router.post('/login', (req, res) => {
+usersRouter.post('/login', (req, res) => {
     const { username, password } = req.body;
     const user = users.find(u => u.username === username && u.password === password);
     if (user) {
@@ -16,14 +17,14 @@ router.post('/login', (req, res) => {
     }
 });
 
-router.post('/register', (req, res) => {
+usersRouter.post('/register', (req, res) => {
     const { username, password, email } = req.body;
     const user = { id: users.length + 1, username, password, email };
     users.push(user);
     res.status(201).json(user);
 });
 
-router.get('/profile/:userId', (req, res) => {
+usersRouter.get('/profile/:userId', (req, res) => {
     const { userId } = req.params;
     const user = users.find(u => u.id === parseInt(userId));
     if (user) {
@@ -33,4 +34,4 @@ router.get('/profile/:userId', (req, res) => {
     }
 });
 
-module.exports = router;
+export default usersRouter;

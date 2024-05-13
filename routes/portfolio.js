@@ -1,12 +1,13 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+
+const portfolioRouter = express.Router();
 
 let portfolios = [
     { userId: 1, items: [{ name: 'Item 1', quantity: 10 }, { name: 'Item 2', quantity: 5 }] },
     { userId: 2, items: [{ name: 'Item 1', quantity: 7 }, { name: 'Item 3', quantity: 3 }] },
 ];
 
-router.get('/:userId', (req, res) => {
+portfolioRouter.get('/:userId', (req, res) => {
     const { userId } = req.params;
     const portfolio = portfolios.find(p => p.userId === parseInt(userId));
     if (portfolio) {
@@ -16,7 +17,7 @@ router.get('/:userId', (req, res) => {
     }
 });
 
-router.put('/:userId', (req, res) => {
+portfolioRouter.put('/:userId', (req, res) => {
     const { userId } = req.params;
     const { items } = req.body;
     const portfolio = portfolios.find(p => p.userId === parseInt(userId));
@@ -28,4 +29,4 @@ router.put('/:userId', (req, res) => {
     }
 });
 
-module.exports = router;
+export default portfolioRouter;

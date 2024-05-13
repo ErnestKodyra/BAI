@@ -1,8 +1,8 @@
-const express = require('express');
-const router = express.Router();
+import express from 'express';
+
+const stockRouter = express.Router();
 
 let stocks = [
-    // trzeba ustalic ile maksymalnie prices przechowujemy na potrzeby robienia z tego wykresu itp
     { symbol: 'AAPL', prices: [
         { date: '2021-01-01 19:27:00', open: 92.86, high: 93.05, low: 91.20, close: 91.55 },
         { date: '2021-01-01 19:27:15', open: 92.00, high: 93.09, low: 92.00, close: 93.05 },
@@ -17,9 +17,7 @@ let stocks = [
     ]}
 ];
 
-// zrobic logike zajmujaca sie generowaniem nowych cen akcji co 15 sekund zgodnie z trendem, po kilkunastu tickach trend sie zmienia
-
-router.get('/:symbol', (req, res) => {
+stockRouter.get('/:symbol', (req, res) => {
     const { symbol } = req.params;
     const stock = stocks.find(s => s.symbol === symbol);
     if (stock) {
@@ -29,4 +27,4 @@ router.get('/:symbol', (req, res) => {
     }
 });
 
-module.exports = router;
+export default stockRouter;
