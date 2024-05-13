@@ -51,10 +51,6 @@ async function register() {
 </script>
 
 <style scoped>
-h2.bold-text {
-  text-align: center;
-  font-size: 2em;
-}
 
 h1.stylized-text {
   margin: 10px;

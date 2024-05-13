@@ -4,7 +4,10 @@
       <div class="navbar">
         <span class="stylized-text">FinManager</span>
         <button class="filled-button-green">
-        <router-link class="button-text" to="/portfolio">Testing space</router-link>
+        <router-link class="button-text" to="/portfolio">Wallet</router-link>
+        </button>
+        <button class="filled-button-green">
+        <router-link class="button-text" to="/stock">Trading</router-link>
         </button>
         <button class="filled-button-green">
         <router-link class="button-text" to="/profile">Profile</router-link>
@@ -32,7 +35,6 @@
   display: flex;
   justify-content: right;
 }
-
 
 span.stylized-text {
   font-family: 'Newsreader';

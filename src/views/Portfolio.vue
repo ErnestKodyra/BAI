@@ -87,8 +87,4 @@ onMounted(() => {
     font-size: 2.5em;
     word-spacing: 5px;
   }
-
-  h4.counter-text {
-    text-align: center;
-  }
 </style>

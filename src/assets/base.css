@@ -173,6 +173,10 @@ body {
   padding-top: 20px;
   border-radius: 6px;
   background-color: #e9e9e9;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 .container-element-clickable {
@@ -184,12 +188,10 @@ body {
 }
 
 .container-element-clickable:hover {
-  border-bottom: 2px solid #000000;
   box-shadow: 0px 0px 5px 0px #000000;
 }
 
 .container-element-clickable:active {
-  margin: 3px;
   box-shadow: 2px 2px 7px 2px #000000;
 }
 

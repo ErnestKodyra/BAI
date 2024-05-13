@@ -4,7 +4,8 @@ import Register from './views/Register.vue'
 import Profile from './views/Profile.vue'
 import Portfolio from './views/Portfolio.vue'
 import Exchange from './views/Exchange.vue'
-import Stock from "@/views/Stock.vue";
+import StockDetails from "@/views/StockDetails.vue";
+import StockList from './views/StockList.vue'
 
 const routes = [
     {
@@ -33,9 +34,14 @@ const routes = [
         component: Exchange
     },
     {
+        path: '/stock',
+        name: 'StockList',
+        component: StockList
+    },
+    {
         path: '/stock/:symbol',
-        name: 'Stock',
-        component: Stock
+        name: 'StockDetails',
+        component: StockDetails
     }
 ]
 
