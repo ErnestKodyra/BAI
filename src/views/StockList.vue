@@ -67,6 +67,7 @@
 </template>
 
 <script setup>
+// trzeba wyżej generować wyżej te elementy kontenera przy użyciu v-for dla każdego stocksa w jsonie
 import { ref } from 'vue'
 import axios from 'axios'
 

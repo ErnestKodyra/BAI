@@ -3,18 +3,26 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
-import { fetchStock } from './api.js'
+import { ref, onMounted, shallowRef } from 'vue';
+import { fetchStock } from '../api.js'
 import anychart from 'anychart';
+import { useRoute } from 'vue-router';
+import * as testjson from './testprices.json';
 
-let stockSymbol = $route.params.symbol;
-let fetchedData = ref(null);
+let route = useRoute();
+let stockSymbol = route.params.symbol;
+let fetchedData = shallowRef([]);
 
 onMounted(() => {
-    fetchedData.value = fetchStock(stockSymbol)
+    //fetchedData.value = fetchStock(stockSymbol)
+
+    fetchedData.value = testjson.prices.map( (price) => {
+        return [price.date, price.open, price.high, price.low, price.close]
+    });
+    console.log(fetchedData.value)
 
     var dataTable = anychart.data.table();
-    dataTable.addData([fetchedData.value]);
+    dataTable.addData(fetchedData.value);
 
     var mapping = dataTable.mapAs();
     mapping.addField('open', 1);
