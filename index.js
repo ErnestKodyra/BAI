@@ -1,5 +1,4 @@
 import express from 'express';
-import routes from './routes/test.js';
 import usersRouter from './routes/users.js';
 import exchangeRouter from './routes/exchange.js';
 import portfolioRouter from './routes/portfolio.js';
