@@ -1,5 +1,5 @@
 <template>
-  <div class="login-popup-box">
+  <dialog class="login-popup-box">
     <img src="../assets/money.png" class="money-logo-topright">
       <form class="popup-content" @submit.prevent="register">
         <h1 class= "stylized-text">FinManager</h1>
@@ -23,7 +23,7 @@
           <router-link to="/login" class="stylized-text">Log in here!</router-link>
       </form>
       <img src="../assets/money.png" class="money-logo-bottomleft">
-    </div>
+    </dialog>
 </template>
 
 <script setup>

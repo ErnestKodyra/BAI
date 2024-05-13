@@ -1,5 +1,5 @@
 <template>
-  <div class="login-popup-box">
+  <dialog class="login-popup-box">
     <img src="../assets/money.png" class="money-logo-topright">
     <div class="popup-content">
       <h1 class= "stylized-text">FinManager</h1>
@@ -23,7 +23,7 @@
       </form>
   </div>
   <img src="../assets/money.png" class="money-logo-bottomleft">
-  </div>
+</dialog>
 </template>
 
 <script setup>
@@ -43,6 +43,7 @@ const login = async () => {
     console.error('An error occurred:', error)
   }
 }
+
 </script>
 
 <style scoped>
@@ -57,4 +58,5 @@ h1.stylized-text {
   color: black;
   font-size: 3em;
 }
+
 </style>
