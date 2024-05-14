@@ -6,12 +6,15 @@ import Portfolio from './views/Portfolio.vue'
 import Exchange from './views/Exchange.vue'
 import StockDetails from "@/views/StockDetails.vue";
 import StockList from './views/StockList.vue'
+import {fetchUserProfile} from "@/api.js";
+import store from "@/store.js";
 
 const routes = [
     {
         path: '/',
         name: 'Login',
         component: Login
+
     },
     {
         path: '/register',
@@ -19,14 +22,16 @@ const routes = [
         component: Register
     },
     {
-        path: '/profile',
+        path: '/profile/',
         name: 'Profile',
-        component: Profile
+        component: Profile,
+        // meta: { requiresAuth: true }
     },
     {
         path: '/portfolio',
         name: 'Portfolio',
-        component: Portfolio
+        component: Portfolio,
+        // meta: { requiresAuth: true }
     },
     {
         path: '/exchange',
@@ -42,12 +47,14 @@ const routes = [
         path: '/stock/:symbol',
         name: 'StockDetails',
         component: StockDetails
-    }
+    },
 ]
+
+
 
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
+});
 
 export default router

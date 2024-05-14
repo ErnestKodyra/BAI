@@ -1,34 +1,35 @@
-# FinManager
+# uek-bai-project
 
-## Interfejs
-**Figma:** [Projekt](https://www.figma.com/file/tQ8YzVV6qm6BffaabQVOaT/VueApp?type=design&node-id=0%3A1&mode=design&t=qab1VNXqR0Ig3nz4-1) / [Prototyp](https://www.figma.com/proto/tQ8YzVV6qm6BffaabQVOaT/VueApp?type=design&node-id=3-7&t=yFqBzfTVJ9b6nJ6t-1&scaling=scale-down&page-id=0%3A1&mode=design)
+This template should help get you started developing with Vue 3 in Vite.
 
-## Opis aplikacji
-Aplikacja służy do demonstracji przykładowego programu dla klientów brokera. Umożliwia ona symulowanie handlu fikcyjnymi papierami wartościowymi w celach demonstracyjnych. Po założeniu konta użytkownik otrzymuje bazową kwotę na start, którą może manipulować kupując lub sprzedając fikcyjne papiery wartościowe. W zakładce Giełda dostępna jest lista potencjalnych jednostek inwestycyjnych oraz wykresy na żywo reprezentujące zmianę cen papierów wartościowych. Użytkownik ma dostęp do danych historycznych swoich inwestycji i ich rentowności w zakładce Portfel.
+## Recommended IDE Setup
 
-## Opis techniczny
-Aplikacja działa w oparciu o technologie webowe, w szczególności framework Vue.js w wersji 3. Do zarządzania stanem aplikacji wykorzystano bibliotekę Vuex, natomiast poruszanie się po stronach jest możliwe dzięki komponentowi Vue Router. Do stworzenia innych komponentów aplikacji zastosowano Composition API.
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
 
-## Widoki
->   * Widok startowy
->   * Widok logowania
->   * Widok rejestracji
->   * Widok portfela
->   * Widok giełdy
->   * Widok profilu użytkownika
+## Customize configuration
 
-## Funkcje aplikacji
->   * Logowanie do serwisu
->   * Rejestracja konta użytkownika
->   * Konfiguracja konta użytkownika
->   * **Portfel**
->       * Wyświetlanie posiadanych środków pieniężnych
->       * Wyświetlanie całkowitej straty/zysku
->       * Wyświetlanie wolnych środków pieniężnych
->       * Wyświetlanie aktualnie otwartych inwestycji
->       * Wyświetlanie historii transakcji w określonych datach
->       * Kalkulowanie strat/zysków w określonym przedziale czasowym
->   * **Giełda**
->       * Wyświetlanie listy dostępnych papierów wartościowych
->       * Wyświetlanie szczegółów o konkretnym papierze wartościowym wraz z wykresem na żywo ceny
->       * Możliwość kupna lub sprzedaży określonego papieru wartościowego
+See [Vite Configuration Reference](https://vitejs.dev/config/).
+
+## Project Setup
+
+```sh
+npm install
+```
+
+### Compile and Hot-Reload for Development
+
+```sh
+npm run dev
+```
+
+### Compile and Minify for Production
+
+```sh
+npm run build
+```
+
+
+npm install http-proxy-middleware
+npm install axios
+npm install uuid
+

@@ -1,79 +1,26 @@
 <template>
-  <div class="stock">
-    <h2 class="bold-text">STOCKS</h2>
-    <div class="container-gridflex">
-      <div class="container-element">
-        <h1 class="stylized-text">ABC</h1>
-        <h4 class="counter-text">PLN 123.45</h4>
-        <div class="container-gridflex">
-          <div class="container-element">
-            <button class="filled-button-red">
-              <p class="button-text">SELL</p>
-            </button>
-          </div>
-          <div class="container-element-clickable">
-            <p class="counter-text">+</p>
-          </div>
-          <div class="container-element">
-            <input type="number" required class="input-text" value=0 min=0></input>
-          </div>
-          <div class="container-element-clickable">
-            <p class="counter-text">-</p>
-          </div>
-          <div class="container-element">
-              <button class="filled-button-green">
-                <p class="button-text">BUY</p>
-              </button>
-          </div>
-        </div>
-        <div class="container-element">
-          <button class="filled-button-green">
-            <p class="button-text">Details & price chart</p>
-          </button>
-        </div>
-      </div>
-      <div class="container-element">
-        <h1 class="stylized-text">IDK</h1>
-        <h4 class="counter-text">PLN 12.91</h4>
-        <div class="container-gridflex">
-          <div class="container-element">
-            <button class="filled-button-red">
-              <p class="button-text">SELL</p>
-            </button>
-          </div>
-          <div class="container-element-clickable">
-            <p class="counter-text">+</p>
-          </div>
-          <div class="container-element">
-            <input type="number" required class="input-text" value=0 min=0></input>
-          </div>
-          <div class="container-element-clickable">
-            <p class="counter-text">-</p>
-          </div>
-          <div class="container-element">
-              <button class="filled-button-green">
-                <p class="button-text">BUY</p>
-              </button>
-          </div>
-        </div>
-        <div class="container-element">
-          <button class="filled-button-green">
-            <p class="button-text">Details & price chart</p>
-          </button>
-        </div>
-      </div>
+  <div>
+    <div v-for="stock in stocks" :key="stock.symbol">
+      <h2>{{ stock.symbol }}</h2>
+      <p>{{ stock.price }}</p>
     </div>
   </div>
 </template>
 
 <script setup>
-// trzeba wyżej generować wyżej te elementy kontenera przy użyciu v-for dla każdego stocksa w jsonie
-import { ref } from 'vue'
-import axios from 'axios'
+import { ref, onMounted } from 'vue'
+import { fetchStock } from '../api'
 
-const stocks = ref(null)
-const selectedStock = ref(null)
+const stocks = ref([])
 
+onMounted(async () => {
+  try {
+    const response = await fetchStock()
+    stocks.value = response.data
+  } catch (error) {
+    console.error('An error occurred:', error)
+  }
+})
 </script>
 
 <style scoped>
