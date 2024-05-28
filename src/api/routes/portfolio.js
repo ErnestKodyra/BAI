@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 let portfolios = [
@@ -7,6 +7,7 @@ let portfolios = [
 ];
 
 router.get('/:userId', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     const { userId } = req.params;
     const portfolio = portfolios.find(p => p.userId === parseInt(userId));
     if (portfolio) {
@@ -28,4 +29,4 @@ router.put('/:userId', (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

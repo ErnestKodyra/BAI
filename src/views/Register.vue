@@ -27,7 +27,6 @@
 </template>
 
 <script setup>
-import { registerUser } from '../api'
 import { ref } from 'vue'
 import { useStore } from 'vuex'
 
@@ -36,18 +35,6 @@ const username = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
-async function register() {
-  if (password.value !== confirmPassword.value) {
-    alert('Passwords do not match!')
-    return
-  }
-  try {
-    const response = await registerUser({ username: username.value, password: password.value })
-    store.commit('setUser', response.data.user)
-  } catch (error) {
-    console.error('An error occurred:', error)
-  }
-}
 </script>
 
 <style scoped>

@@ -19,14 +19,16 @@ const routes = [
         component: Register
     },
     {
-        path: '/profile',
+        path: '/profile/',
         name: 'Profile',
-        component: Profile
+        component: Profile,
+        // meta: { requiresAuth: true }
     },
     {
-        path: '/portfolio',
+        path: '/portfolio/:id',
         name: 'Portfolio',
-        component: Portfolio
+        component: Portfolio,
+        // meta: { requiresAuth: true }
     },
     {
         path: '/exchange',
@@ -42,12 +44,12 @@ const routes = [
         path: '/stock/:symbol',
         name: 'StockDetails',
         component: StockDetails
-    }
+    },
 ]
 
 const router = createRouter({
     history: createWebHistory(),
     routes
-})
+});
 
 export default router

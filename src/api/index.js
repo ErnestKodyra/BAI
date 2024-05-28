@@ -1,14 +1,21 @@
 import express from 'express';
-import usersRouter from './routes/users';
-import portfolioRouter from './routes/portfolio';
-import exchangeRouter from './routes/exchange';
-import stockRouter from './routes/stock';
+import users from './routes/users.js';
+import portfolio from './routes/portfolio.js';
+import exchange from './routes/exchange.js';
+import stock from './routes/stock.js';
 
+async function createServer() {
+
+const api = express();
 const router = express.Router();
 
-router.use('/users', usersRouter);
-router.use('/portfolio', portfolioRouter);
-router.use('/exchange', exchangeRouter);
-router.use('/stock', stockRouter);
+router.use('/users', users);
+router.use('/portfolio', portfolio);
+router.use('/exchange', exchange);
+router.use('/stock', stock);
 
-export default router;
+api.use(router);
+
+api.listen(4000);
+}
+createServer();

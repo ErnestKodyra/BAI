@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 let users = [
@@ -23,7 +23,8 @@ router.post('/register', (req, res) => {
     res.status(201).json(user);
 });
 
-router.get('/profile/:userId', (req, res) => {
+router.get('/', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     const { userId } = req.params;
     const user = users.find(u => u.id === parseInt(userId));
     if (user) {
@@ -33,4 +34,4 @@ router.get('/profile/:userId', (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

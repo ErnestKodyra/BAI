@@ -1,4 +1,4 @@
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 
 let exchangeRates = {
@@ -10,7 +10,8 @@ let exchangeRates = {
 };
 
 router.get('/', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
     res.json(exchangeRates);
 });
 
-module.exports = router;
+export default router;
