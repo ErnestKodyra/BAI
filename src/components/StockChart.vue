@@ -47,6 +47,6 @@ onMounted(async () => {
 
     dataTable.remove();
     dataTable.addData(fetchedData.value);
-  }, 5000);
+  }, 1000);
   });
 </script>
