@@ -9,7 +9,7 @@ import StockList from './views/StockList.vue'
 
 const routes = [
     {
-        path: '/',
+        path: '/login',
         name: 'Login',
         component: Login
     },

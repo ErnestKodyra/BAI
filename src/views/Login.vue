@@ -6,15 +6,15 @@
       <h2 class="bold-text">LOGIN</h2>
       <form @submit.prevent="login">
         <div>
-        <label for="username" class="regular-text">Username:</label>
-        <input type="text" id="username" v-model="username" required class="input-text" value="USERNAME">
+        <label for="email" class="regular-text">E-mail:</label>
+        <input type="text" id="email" v-model="email" required class="input-text" value="E-MAIL">
         </div>
         <div>
         <label for="password" class="regular-text">Password: </label>
         <input type="password" id="password" v-model="password" required class="input-text" value="PASSWORD" >
         </div>
-        <div class="login-button"> 
-          <button class="filled-button-green" type="submit">
+        <div class="login-button" > 
+          <button class="filled-button-green" type="submit" @click="verifyCredentials">
             <p class="button-text">Login Now</p>
           </button>
           <p class="stylized-text">Not a member?</p>
@@ -27,23 +27,28 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import axios from 'axios'
-import { useStore } from 'vuex'
+import { ref, watch } from 'vue'
+import useStore from '../store';
+import { useRouter } from 'vue-router';
 
-const username = ref('')
+const store = useStore();
+const router = useRouter();
+const email = ref('')
 const password = ref('')
-const store = useStore()
 
-const login = async () => {
-  try {
-    const response = await axios.post('/api/login', { username: username.value, password: password.value })
-    store.commit('setUser', response.data.user)
-  } catch (error) {
-    console.error('An error occurred:', error)
+watch(() => store.userID, (newVal) => {
+  if (newVal) {
+    router.push(`/portfolio/${newVal}`);
+  }
+}, { immediate: true });
+
+async function verifyCredentials() {
+  if (password.value !== '') {
+    await store.signUserIn(email.value, password.value);
+  } else {
+    console.log("Password cannot be empty!");
   }
 }
-
 </script>
 
 <style scoped>

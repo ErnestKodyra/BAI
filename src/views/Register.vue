@@ -5,8 +5,8 @@
         <h1 class= "stylized-text">FinManager</h1>
         <h2 class="bold-text">JOIN</h2>
         <div>
-        <label for="username" class="regular-text">Username:</label>
-        <input type="text" id="username" v-model="username" required class="input-text" value="USERNAME">
+        <label for="email" class="regular-text">E-mail:</label>
+        <input type="text" id="email" v-model="email" required class="input-text" value="E-MAIL">
         </div>
         <div>
         <label for="password" class="regular-text">Password:</label>
@@ -16,7 +16,7 @@
         <label for="confirmPassword" class="regular-text">Confirm Password:</label>
         <input type="password" id="confirmPassword" v-model="confirmPassword" required class="input-text" value="PASSWORD">
         </div>
-        <button type="submit" class="filled-button-green">
+        <button type="submit" class="filled-button-green" @click="verifyCredentials()">
           <p class="button-text">Register</p>
         </button>
         <p class="stylized-text">Already a member?</p>
@@ -27,14 +27,33 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useStore } from 'vuex'
+import { ref, watch } from 'vue'
+import useStore from '../store';
+import { useRouter } from 'vue-router';
 
-const store = useStore()
-const username = ref('')
+const store = useStore();
+const router = useRouter();
+const email = ref('')
 const password = ref('')
 const confirmPassword = ref('')
 
+watch(() => store.userID, (newVal) => {
+  if (newVal) {
+    router.push(`/portfolio/${newVal}`);
+  }
+}, { immediate: true });
+
+async function verifyCredentials() {
+  if (password.value !== '' && confirmPassword.value !== '') {
+    if (password.value === confirmPassword.value) {
+      store.registerUser(email.value, password.value);
+    } else {
+      console.log("Passwords do not match!");
+    }
+  } else {
+    console.log("Passwords cannot be empty!");
+  }
+}
 </script>
 
 <style scoped>
