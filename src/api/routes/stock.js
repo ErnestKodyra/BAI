@@ -7,8 +7,17 @@ let stocks = [
     ]},
     { symbol: 'TSL', prices: [
         { date: Date(), open: 92.86, high: 93.05, low: 91.20, close: 91.55 }
+    ]},
+    { symbol: 'ASS', prices: [
+        { date: Date(), open: 55.56, high: 57.01, low: 54.87, close: 56.33 }
     ]}
 ];
+
+router.get('/symbols', (req, res) => {
+    res.header("Access-Control-Allow-Origin", "*")
+    const symbols = stocks.map(stock => stock.symbol);
+    res.json(symbols);
+});
 
 stocks.forEach(stock => {
     let tickCounter = 0;
@@ -119,5 +128,7 @@ router.get('/:symbol', (req, res) => {
         res.status(404).json({ message: 'Stock not found' });
     }
 });
+
+
 
 export default router;
