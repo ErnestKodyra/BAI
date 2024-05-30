@@ -1,59 +1,80 @@
-import { defineStore } from 'pinia'
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from 'firebase/auth'
-import { initializeApp } from 'firebase/app'
-import { getFirestore } from 'firebase/firestore'
+import { defineStore } from 'pinia';
+import { auth, db } from '@/firebase';
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
+import { doc, getDoc, setDoc } from 'firebase/firestore';
 
-const firebaseConfig = {
-    apiKey: "AIzaSyASjp0ygjWuCrzGfBKGSUaacjLnFsOFVIk",
-    authDomain: "finmanager-77b5e.firebaseapp.com",
-    projectId: "finmanager-77b5e",
-    storageBucket: "finmanager-77b5e.appspot.com",
-    messagingSenderId: "145607513741",
-    appId: "1:145607513741:web:a9e9b14da7269b4e2474c4"
-  };
-
-const app = initializeApp(firebaseConfig);
-const firestore = getFirestore(app);
-const auth = getAuth(app);
-
-const useStore = defineStore('user', {
-    state: () => {
-        return {
-            userID: null
+export const useStore = defineStore('auth', {
+  state: () => ({
+    user: null, // This will store the user's auth object or null
+    userProfile: {}, // This could store additional user information from Firestore
+  }),
+  actions: {
+    async registerUser(email, password) {
+        try {
+          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+          this.user = userCredential.user;
+  
+          // Set initial data in Firestore
+          const userData = {
+            wallet: 1000,  // Set initial wallet balance
+            stocks: []     // Prepare for storing stock data
+          };
+          
+          await setDoc(doc(db, "users", this.user.uid), userData);
+  
+          // Optionally fetch the newly set profile to update local state
+          this.userProfile = userData;
+  
+          return true;
+        } catch (error) {
+          console.error('Registration Error:', error);
+          return false;
         }
+      },
+    async loginUser(email, password) {
+      try {
+        const response = await signInWithEmailAndPassword(auth, email, password);
+        this.user = response.user;
+        return true;
+      } catch (error) {
+        console.error('Login Error:', error);
+        return false;
+      }
     },
-    actions: {
-        async signUserIn(email, password) {
-            try {
-                const userCredential = await signInWithEmailAndPassword(auth, email, password);
-                this.userID = userCredential.user.uid;
-                return true;
-            } catch (error) {
-                console.log(error.message)
-                return false;
-            }
-        },
-        async signUserOut() {
-            try {
-                await signOut(auth)
-                this.userID = null;
-                return true;
-            } catch (error) {
-                console.log(error.message)
-                return false;
-            }
-        },
-        async registerUser(email, password) {
-            try {
-                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-                this.userID = userCredential.user.uid;
-                return true;
-            } catch (error) {
-                console.log(error.message);
-                return false;
-            }
-        }
-    }
-})
+    async logoutUser() {
+      try {
+        await signOut(auth);
+        this.user = null;
+        this.userProfile = {};
+        return true;
+      } catch (error) {
+        console.error('Logout Error:', error);
+        return false;
+      }
+    },
+    async fetchUserProfile() {
+      if (!this.user) return;
+      const docRef = doc(db, 'users', this.user.uid);
+      const docSnap = await getDoc(docRef);
+      if (docSnap.exists()) {
+        this.userProfile = docSnap.data();
+      } else {
+        console.log("No such profile!");
+      }
+    },
+  }
+});
+
+// Firebase Auth State Persistence
+onAuthStateChanged(auth, (user) => {
+  const store = useStore();
+  if (user) {
+    store.user = user;
+    store.fetchUserProfile();
+  } else {
+    store.user = null;
+    store.userProfile = {};
+  }
+});
 
 export default useStore;

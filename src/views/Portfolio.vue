@@ -1,30 +1,34 @@
 <template>
   <div>
-    <h1>Portfolio</h1>
-    <div v-for="stock in stocks" :key="stock.symbol">
-      <Stock :stock="stock" />
-    </div>
+    <h1>Your Portfolio</h1>
+    <p>Wallet Balance: {{ userProfile.wallet }}</p>
+    <button @click="addFunds">Add $100</button>
   </div>
 </template>
 
-<script setup>
-import { ref, onMounted } from 'vue'
-import { fetchPortfolio } from '../api'
+<script>
+import { useStore } from '@/store';  // Importing useStore from your Pinia store
+import { updateUserWallet } from '@/firestore';  // Importing Firestore operations
 
-const userId = 1
-var stocks = ref([])
+export default {
+  setup() {
+    const store = useStore();  // Using the Pinia store
 
-onMounted(async () => {
-  try {
-    const response = await fetchPortfolio(userId)
-    console.log('Response data:', response.data)
-    stocks.value = response.data
-  } catch (error) {
-    console.error('An error occurred:', error)
+    const addFunds = async () => {
+      if (!store.user) {
+        alert("You are not logged in!");
+        return;
+      }
+      const newWalletAmount = store.userProfile.wallet + 100;
+      await updateUserWallet(store.user.uid, newWalletAmount);
+      await store.fetchUserProfile();  // Refresh the user profile after updating
+    };
+
+    return {
+      userProfile: store.userProfile,
+      addFunds
+    };
   }
-})
+};
 </script>
 
-<style scoped>
-
-</style>
