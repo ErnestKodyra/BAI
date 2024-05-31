@@ -45,6 +45,7 @@
 }
 
 body {
+  font-family: Arial, sans-serif;
   min-height: 100vh;
   color: var(--color-text);
   background: var(--color-background);

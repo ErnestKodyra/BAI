@@ -12,13 +12,13 @@
         <p class="counter-text">-</p>
       </div>
       <div class="container-element">
-        <input v-model.number="quantity" type="number" min="1" placeholder="Qty" />
+        <input v-model.number="quantity" type="number" min="1" class="input-text" />
       </div>
       <div class="container-element-clickable" @click="incrementQuantity">
         <p class="counter-text">+</p>
       </div>
       <div class="container-element">
-        <button @click="buyStock" class="filled-button-green">
+        <button @click="attemptBuyStock" :class="{ 'disabled-button': alreadyOwnStock }" class="filled-button-green">
           <p class="button-text">BUY</p>
         </button>
       </div>
@@ -32,11 +32,12 @@
 </template>
 
 <script>
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, computed, onMounted, onUnmounted } from 'vue';
 import { useRouter } from 'vue-router';
 import { fetchStock } from '@/api';
 import { useStore } from '@/store';
 import { updateStockHoldings } from '@/firestore';
+import Swal from 'sweetalert2';
 
 export default {
   props: {
@@ -74,8 +75,9 @@ export default {
             purchaseDate
           );
           await store.fetchUserProfile();
+          Swal.fire('Success!', `Transaction of buying ${props.symbol} shares has been successfully executed!`, 'success');
         } else {
-          alert('Insufficient funds');
+          Swal.fire('Error!', 'Insufficient funds', 'error');
         }
       }
     };
@@ -94,10 +96,23 @@ export default {
           new Date()
         );
         await store.fetchUserProfile();
+        Swal.fire('Success!', `Transaction of selling ${props.symbol} shares has been successfully executed!`, 'success');
       } else {
-        alert('Insufficient stock quantity');
+        Swal.fire('Error!', 'Insufficient quantity of shares', 'error');
       }
     };
+
+    const attemptBuyStock = () => {
+      if (alreadyOwnStock.value) {
+        Swal.fire('Error!', 'You already own this stock. Sell it before buying more.', 'error');
+      } else {
+        buyStock();
+      }
+    };
+
+    const alreadyOwnStock = computed(() => {
+      return store.userProfile.stocks.some(stock => stock.symbol === props.symbol);
+    });
 
     const incrementQuantity = () => {
       quantity.value++;
@@ -127,7 +142,9 @@ export default {
       sellStock,
       incrementQuantity,
       decrementQuantity,
-      goToStockDetails
+      goToStockDetails,
+      attemptBuyStock,
+      alreadyOwnStock
     };
   }
 };
@@ -153,6 +170,10 @@ export default {
 .filled-button-green {
   --btn-bg-color: green;
 }
+.disabled-button {
+  background-color: grey;
+  cursor: not-allowed;
+}
 .input-text {
   width: 50px;
   padding: 5px;
@@ -161,11 +182,27 @@ export default {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 .container-element, .container-element-clickable {
   margin: 5px;
 }
 .button-text, .counter-text {
   margin: 0;
+}
+
+@media (max-width: 600px) {
+  .container-gridflex {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .filled-button-red, .filled-button-green, .disabled-button {
+    padding: 5px;
+    font-size: 12px;
+  }
+  .input-text {
+    width: 40px;
+    padding: 3px;
+  }
 }
 </style>

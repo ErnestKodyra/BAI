@@ -29,6 +29,7 @@
 import { ref } from 'vue';
 import { useStore } from '@/store';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -39,7 +40,7 @@ export default {
 
     const login = async () => {
       if (!await store.loginUser(email.value, password.value)) {
-        window.alert("Login failed!");
+        Swal.fire('Error!', 'Login failed!', 'error');
       } else {
         router.push('/portfolio');
       }
@@ -72,4 +73,8 @@ h1.stylized-text {
 
 .input-text {
   margin: 10px 0; }
+
+.filled-button-green {
+  cursor: pointer;
+}
 </style>
