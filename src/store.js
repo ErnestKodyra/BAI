@@ -1,8 +1,21 @@
 import { defineStore } from 'pinia';
-import { auth, db } from '@/firebase';
+import { db } from '@/firebase';
+import { getAuth, updateProfile as firebaseUpdateProfile } from 'firebase/auth';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 
+
+const auth = getAuth();
+
+export async function updateProfile(user, updates) {
+  try {
+    await firebaseUpdateProfile(user, updates);
+    return true;
+  } catch (error) {
+    console.error('Update Profile Error:', error);
+    return false;
+  }
+}
 export const useStore = defineStore('auth', {
   state: () => ({
     user: null, // This will store the user's auth object or null
@@ -17,7 +30,7 @@ export const useStore = defineStore('auth', {
           // Set initial data in Firestore
           const userData = {
             wallet: 1000,  // Set initial wallet balance
-            stocks: [],     // Prepare for storing stock data
+            stocks: [],    // Prepare for storing stock data
             transactions: []
           };
           
@@ -62,6 +75,19 @@ export const useStore = defineStore('auth', {
       } else {
         console.log("No such profile!");
       }
+    },
+    async changePassword(currentPassword, newPassword) {
+      // Validate the current password
+      if (this.userProfile.password !== currentPassword) {
+        return false;
+      }
+      // Update the password
+      this.userProfile.password = newPassword;
+
+      // Update the password in Firebase Auth
+      await updateProfile(auth.currentUser, { password: newPassword });
+
+      return true;
     },
   }
 });

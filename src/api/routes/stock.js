@@ -10,7 +10,31 @@ let stocks = [
     ]},
     { symbol: 'ASS', prices: [
         { date: Date(), open: 55.56, high: 57.01, low: 54.87, close: 56.33 }
-    ]}
+    ]},
+    { symbol: 'GOOGL', prices: [
+            { date: Date(), open: 1000.00, high: 1005.00, low: 995.00, close: 1000.00 }
+        ]},
+    { symbol: 'MSFT', prices: [
+            { date: Date(), open: 210.00, high: 215.00, low: 205.00, close: 212.00 }
+        ]},
+    { symbol: 'AMZN', prices: [
+            { date: Date(), open: 3100.00, high: 3150.00, low: 3050.00, close: 3120.00 }
+        ]},
+    { symbol: 'FB', prices: [
+            { date: Date(), open: 250.00, high: 255.00, low: 245.00, close: 252.00 }
+        ]},
+    { symbol: 'TSLA', prices: [
+            { date: Date(), open: 600.00, high: 610.00, low: 590.00, close: 605.00 }
+        ]},
+    { symbol: 'NVDA', prices: [
+            { date: Date(), open: 500.00, high: 510.00, low: 490.00, close: 505.00 }
+        ]},
+    { symbol: 'PYPL', prices: [
+            { date: Date(), open: 220.00, high: 225.00, low: 215.00, close: 222.00 }
+        ]},
+    { symbol: 'NFLX', prices: [
+            { date: Date(), open: 480.00, high: 490.00, low: 470.00, close: 485.00 }
+        ]}
 ];
 
 router.get('/symbols', (req, res) => {
@@ -26,9 +50,9 @@ stocks.forEach(stock => {
 
     setInterval(() => {
             const lastPrice = stock.prices[stock.prices.length - 1];
-            console.log(stock.symbol);
-            console.log(trend)
-            console.log(lastPrice);
+            // console.log(stock.symbol);
+            // console.log(trend)
+            // console.log(lastPrice);
             const newPrice = generateNewPrice(lastPrice);
             stock.prices.push(newPrice);
             if (stock.prices.length > 500) {

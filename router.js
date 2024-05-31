@@ -5,10 +5,16 @@ import Profile from './views/Profile.vue';
 import Portfolio from './views/Portfolio.vue';
 import StockDetails from "@/views/StockDetails.vue";
 import StockList from './views/StockList.vue';
-import HomePage from './views/HomePage.vue';
+import HomePage from "@/views/HomePage.vue";
+import ChangePassword from '@/views/ChangePassword.vue';
 import { auth } from './firebase.js';
 
+
 const routes = [
+    {
+        path: '/',
+        redirect: '/login'
+    },
     {
         path: '/login',
         name: 'Login',
@@ -18,6 +24,18 @@ const routes = [
         path: '/register',
         name: 'Register',
         component: Register
+    },
+    {
+        path: '/change-password',
+        name: 'ChangePassword',
+        component: ChangePassword,
+        meta: { requiresAuth: true }
+    },
+    {
+        path: '/home',
+        name: 'home',
+        component: HomePage,
+        meta: { requiresAuth: true }
     },
     {
         path: '/profile',

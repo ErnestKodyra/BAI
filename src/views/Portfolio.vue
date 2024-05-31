@@ -95,5 +95,31 @@ export default {
 </script>
 
 <style scoped>
-/* Add your styles here */
+.portfolio-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.stylized-text {
+  font-size: 2em;
+  color: #333;
+}
+
+.portfolio-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.regular-text {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.loading-text {
+  font-size: 1.2em;
+  color: #999;
+}
 </style>

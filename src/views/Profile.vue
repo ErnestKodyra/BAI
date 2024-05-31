@@ -1,13 +1,14 @@
 <template>
-  <div>
-    <h2>User Profile</h2>
-    <div v-if="user">
-      <p>Username: {{ user.username }}</p>
-      <p>Email: {{ user.email }}</p>
+  <div class="profile-container">
+    <h2 class="stylized-text">Your profile</h2>
+    <div v-if="user" class="user-details">
+      <p class="regular-text">Username: {{ user.username }}</p>
+      <p class="regular-text">Email: {{ user.email }}</p>
     </div>
     <div v-else>
-      <p>Loading...</p>
+      <p class="loading-text">Loading...</p>
     </div>
+    <router-link to="/change-password" class="change-password-link">Change Password</router-link>
   </div>
 </template>
 
@@ -34,3 +35,45 @@ export default {
   },
 };*/
 </script>
+<style scoped>
+.profile-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.stylized-text {
+  font-size: 2em;
+  color: #333;
+}
+
+.user-details {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.regular-text {
+  font-size: 1.2em;
+  color: #666;
+}
+
+.loading-text {
+  font-size: 1.2em;
+  color: #999;
+}
+.change-password-link {
+  display: inline-block;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #20871E;  color: white;
+  text-decoration: none;
+  border-radius: 5px;
+  font-size: 1.2em;
+  transition: background-color 0.3s ease;
+}
+
+.change-password-link:hover {
+  background-color: #20871E;}
+</style>

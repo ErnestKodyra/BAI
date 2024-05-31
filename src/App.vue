@@ -1,8 +1,11 @@
 <template>
   <div id="app">
-    <nav>
+    <nav v-if="store.user !== null">
       <div class="navbar">
-        <span class="stylized-text" @click="console.log(store.userID)">FinManager</span>
+        <router-link to="/home">
+        <span class="stylized-text" @click="console.log(store.user.uid)">FinManager
+        <img src="./assets/money.png" class="money-logo"> </span>
+        </router-link>
         <div>
           <button class="filled-button-green">
             <router-link class="button-text" to="/portfolio">Wallet</router-link>
@@ -18,22 +21,12 @@
             <router-link class="button-text" to="/profile">Profile</router-link>
           </button>
         </div>
-        <div v-if="store.userID == null">
-          <button class="filled-button-green">
-            <router-link class="button-text" to="/login">Login</router-link>
-          </button>
-        </div>
-        <div v-if="store.userID == null">
-          <button class="filled-button-green">
-            <router-link class="button-text" to="/register">Register</router-link>
-          </button>
-        </div>
-        <div v-if="store.userID !== null">
-          <button class="filled-button-green" @click="store.signUserOut()">
+        <div>
+          <button class="filled-button-green" @click="store.logoutUser()">
             <router-link class="button-text" to="/">Log out</router-link>
           </button>
         </div>
-    </div>
+      </div>
     </nav>
     <router-view/>
   </div>
@@ -63,5 +56,16 @@ span.stylized-text {
   left: 10px;
   top: 0;
   overflow: hidden;
+  display: flex;
+  align-items: center;
+}
+.money-logo {
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  height: 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
 }
 </style>
