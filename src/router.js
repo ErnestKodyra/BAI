@@ -5,12 +5,13 @@ import Profile from './views/Profile.vue';
 import Portfolio from './views/Portfolio.vue';
 import StockDetails from "@/views/StockDetails.vue";
 import StockList from './views/StockList.vue';
+import ChangePassword from './views/ChangePassword.vue';
 import HomePage from './views/HomePage.vue';
 import { auth } from './firebase.js';
 
 const routes = [
     {
-        path: '/login',
+        path: '/',
         name: 'Login',
         component: Login,
     },
@@ -42,6 +43,12 @@ const routes = [
         name: 'StockDetails',
         component: StockDetails,
         meta: { requiresAuth: true }
+    },
+    {
+        path: '/change-password',
+        name: 'ChangePassword',
+        component: ChangePassword,
+        meta: { requiresAuth: true }
     }
 ];
 
@@ -50,13 +57,12 @@ const router = createRouter({
     routes
 });
 
-// Navigation Guard to check for authentication
 router.beforeEach((to, from, next) => {
     const requiresAuth = to.matched.some(record => record.meta.requiresAuth);
     const isAuthenticated = auth.currentUser;
 
     if (requiresAuth && !isAuthenticated) {
-        next('/login');
+        next('/');
     } else {
         next();
     }

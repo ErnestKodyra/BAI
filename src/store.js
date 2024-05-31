@@ -1,9 +1,8 @@
 import { defineStore } from 'pinia';
 import { db } from '@/firebase';
-import { getAuth, updateProfile as firebaseUpdateProfile } from 'firebase/auth';
+import { getAuth, updateProfile as firebaseUpdateProfile, reauthenticateWithCredential, EmailAuthProvider, updatePassword } from 'firebase/auth';
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
-
 
 const auth = getAuth();
 
@@ -16,39 +15,39 @@ export async function updateProfile(user, updates) {
     return false;
   }
 }
+
 export const useStore = defineStore('auth', {
   state: () => ({
-    user: null, // This will store the user's auth object or null
-    userProfile: {}, // This could store additional user information from Firestore
+    user: null,
+    userProfile: {},
   }),
   actions: {
     async registerUser(email, password) {
-        try {
-          const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-          this.user = userCredential.user;
-  
-          // Set initial data in Firestore
-          const userData = {
-            wallet: 1000,  // Set initial wallet balance
-            stocks: [],    // Prepare for storing stock data
-            transactions: []
-          };
-          
-          await setDoc(doc(db, "users", this.user.uid), userData);
-  
-          // Optionally fetch the newly set profile to update local state
-          this.userProfile = userData;
-  
-          return true;
-        } catch (error) {
-          console.error('Registration Error:', error);
-          return false;
-        }
-      },
+      try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        this.user = userCredential.user;
+
+        const userData = {
+          wallet: 1000,
+          stocks: [],
+          transactions: []
+        };
+        
+        await setDoc(doc(db, "users", this.user.uid), userData);
+
+        this.userProfile = userData;
+
+        return true;
+      } catch (error) {
+        console.error('Registration Error:', error);
+        return false;
+      }
+    },
     async loginUser(email, password) {
       try {
         const response = await signInWithEmailAndPassword(auth, email, password);
         this.user = response.user;
+        await this.fetchUserProfile(); // Fetch user profile after login
         return true;
       } catch (error) {
         console.error('Login Error:', error);
@@ -77,22 +76,25 @@ export const useStore = defineStore('auth', {
       }
     },
     async changePassword(currentPassword, newPassword) {
-      // Validate the current password
-      if (this.userProfile.password !== currentPassword) {
+      try {
+        const user = auth.currentUser;
+        const credential = EmailAuthProvider.credential(user.email, currentPassword);
+
+        // Re-authenticate the user
+        await reauthenticateWithCredential(user, credential);
+
+        // Update the password
+        await updatePassword(user, newPassword);
+
+        return true;
+      } catch (error) {
+        console.error('Change Password Error:', error);
         return false;
       }
-      // Update the password
-      this.userProfile.password = newPassword;
-
-      // Update the password in Firebase Auth
-      await updateProfile(auth.currentUser, { password: newPassword });
-
-      return true;
     },
   }
 });
 
-// Firebase Auth State Persistence
 onAuthStateChanged(auth, (user) => {
   const store = useStore();
   if (user) {

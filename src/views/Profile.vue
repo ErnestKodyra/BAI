@@ -2,7 +2,6 @@
   <div class="profile-container">
     <h2 class="stylized-text">Your profile</h2>
     <div v-if="user" class="user-details">
-      <p class="regular-text">Username: {{ user.username }}</p>
       <p class="regular-text">Email: {{ user.email }}</p>
     </div>
     <div v-else>
@@ -13,28 +12,21 @@
 </template>
 
 <script>
-/*import { ref, onMounted } from 'vue';
-import { fetchUserProfile } from '../api.js';
+import { computed } from 'vue';
+import { useStore } from '@/store';
 
 export default {
-  name: 'UserProfile',
   setup() {
-    const user = ref(1); //tymczasowo
+    const store = useStore();
+    const user = computed(() => store.user);
 
-    onMounted(async () => {
-      try {
-        const userId = 1;
-        const response = await fetchUserProfile(userId);
-        user.value = response.data;
-      } catch (error) {
-        console.error('Error fetching user profile:', error);
-      }
-    });
-
-    return { user };
+    return {
+      user,
+    };
   },
-};*/
+};
 </script>
+
 <style scoped>
 .profile-container {
   display: flex;

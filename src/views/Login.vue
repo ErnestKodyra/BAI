@@ -41,7 +41,7 @@ export default {
       if (!await store.loginUser(email.value, password.value)) {
         window.alert("Login failed!");
       } else {
-        router.push('/profile');
+        router.push('/portfolio');
       }
     };
 

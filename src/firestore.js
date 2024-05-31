@@ -8,7 +8,7 @@ export const getUserProfile = async (userId) => {
         return docSnap.data();
     } else {
         console.log("No such document!");
-        return null;  // Handle non-existing document appropriately
+        return null;
     }
 };
 
@@ -19,7 +19,6 @@ export const updateUserWallet = async (userId, newWalletAmount) => {
     });
 };
 
-// Function to update stock holdings, wallet, and record transactions
 export const updateStockHoldings = async (userId, stockSymbol, quantity, newWalletAmount, transactionType, pricePerShare) => {
     const userRef = doc(db, "users", userId);
     const docSnap = await getDoc(userRef);
@@ -38,13 +37,12 @@ export const updateStockHoldings = async (userId, stockSymbol, quantity, newWall
             userProfile.stocks.push({ symbol: stockSymbol, quantity });
         }
 
-        // Create transaction record
         const transaction = {
             type: transactionType,
             stockSymbol: stockSymbol,
             quantity: quantity,
             pricePerShare: pricePerShare,
-            timestamp: new Date() // Using JavaScript Date object
+            timestamp: new Date()
         };
 
         await updateDoc(userRef, {
@@ -56,6 +54,3 @@ export const updateStockHoldings = async (userId, stockSymbol, quantity, newWall
         console.log("No such user profile!");
     }
 };
-
-
-// Add more Firestore functions as needed

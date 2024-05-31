@@ -2,20 +2,21 @@
   <dialog class="login-popup-box">
     <img src="../assets/money.png" class="money-logo-topright">
     <form class="popup-content" @submit.prevent="register">
-      <h1 class= "stylized-text">Register</h1>
+      <h1 class="stylized-text">Register</h1>
       <div class="input-container">
         <label for="email" class="regular-text">E-mail:</label>
-        <input type="text" id="email" v-model="email" required class="input-text" value="E-MAIL">
+        <input type="text" id="email" v-model="email" required class="input-text">
       </div>
       <div class="input-container">
         <label for="password" class="regular-text">Password:</label>
-        <input type="password" id="password" v-model="password" required class="input-text" value="PASSWORD">
+        <input type="password" id="password" v-model="password" required class="input-text">
       </div>
-      <button type="submit" class="filled-button-green" @click="register">
+      <button type="submit" class="filled-button-green">
         <p class="button-text">Register</p>
       </button>
       <p class="stylized-text">Already a member?</p>
-      <router-link to="/login" class="stylized-text">Log in here!</router-link>
+      <router-link to="/" class="stylized-text">Log in here!</router-link>
+      <p v-if="errorMessage" class="error-message">{{ errorMessage }}</p>
     </form>
     <img src="../assets/money.png" class="money-logo-bottomleft">
   </dialog>
@@ -30,24 +31,25 @@ export default {
   setup() {
     const email = ref('');
     const password = ref('');
+    const errorMessage = ref('');
     const store = useStore();
     const router = useRouter();
 
     const register = async () => {
-      if (!await store.registerUser(email.value, password.value)) {
-        window.alert("Registration failed!");
+      const success = await store.registerUser(email.value, password.value);
+      if (!success) {
+        errorMessage.value = "Registration failed! Please try again.";
       } else {
-        router.push('/profile');
+        router.push('/portfolio');
       }
     };
 
-    return { email, password, register };
+    return { email, password, errorMessage, register };
   }
 };
 </script>
 
 <style scoped>
-
 h1.stylized-text {
   margin: 10px;
   font-family: 'Newsreader';
@@ -68,5 +70,10 @@ h1.stylized-text {
 
 .input-text {
   margin: 10px 0;
+}
+
+.error-message {
+  color: red;
+  margin-top: 10px;
 }
 </style>

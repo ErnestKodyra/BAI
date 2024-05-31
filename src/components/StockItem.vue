@@ -24,8 +24,8 @@
       </div>
     </div>
     <div class="container-element">
-      <button class="filled-button-green">
-        <p class="button-text">Details & price chart</p>
+      <button @click="goToStockDetails" class="filled-button-green">
+        <p class="button-text">Price chart</p>
       </button>
     </div>
   </div>
@@ -33,6 +33,7 @@
 
 <script>
 import { ref, onMounted, onUnmounted } from 'vue';
+import { useRouter } from 'vue-router';
 import { fetchStock } from '@/api';
 import { useStore } from '@/store';
 import { updateStockHoldings } from '@/firestore';
@@ -45,6 +46,7 @@ export default {
     const store = useStore();
     const latestPrice = ref(null);
     const quantity = ref(1);
+    const router = useRouter();
     let intervalId = null;
 
     const fetchData = async () => {
@@ -61,13 +63,15 @@ export default {
       if (quantity.value > 0) {
         const totalCost = quantity.value * latestPrice.value.close;
         if (store.userProfile.wallet >= totalCost) {
+          const purchaseDate = new Date(); // Current date and time
           await updateStockHoldings(
             store.user.uid,
             props.symbol,
             quantity.value,
             store.userProfile.wallet - totalCost,
             'buy',
-            latestPrice.value.close
+            latestPrice.value.close,
+            purchaseDate
           );
           await store.fetchUserProfile();  // Refresh profile data
         } else {
@@ -81,12 +85,13 @@ export default {
       if (stock && stock.quantity >= quantity.value) {
         const totalValue = quantity.value * latestPrice.value.close;
         await updateStockHoldings(
-            store.user.uid,
-            props.symbol,
-            quantity.value,
-            store.userProfile.wallet + totalValue,
-            'sell',
-            latestPrice.value.close
+          store.user.uid,
+          props.symbol,
+          quantity.value,
+          store.userProfile.wallet + totalValue,
+          'sell',
+          latestPrice.value.close,
+          new Date()  // Current date and time for the sell operation
         );
         await store.fetchUserProfile();  // Refresh profile data
       } else {
@@ -100,6 +105,10 @@ export default {
 
     const decrementQuantity = () => {
       if (quantity.value > 1) quantity.value--;
+    };
+
+    const goToStockDetails = () => {
+      router.push({ name: 'StockDetails', params: { symbol: props.symbol } });
     };
 
     onMounted(() => {
@@ -117,48 +126,46 @@ export default {
       buyStock,
       sellStock,
       incrementQuantity,
-      decrementQuantity
+      decrementQuantity,
+      goToStockDetails
     };
-  },
+  }
 };
 </script>
 
-  
-  <style scoped>
-  .stylized-text {
-    font-size: 24px;
-  }
-  .counter-text {
-    font-size: 18px;
-  }
-  .filled-button-red, .filled-button-green {
-    background-color: var(--btn-bg-color);
-    color: white;
-    border: none;
-    padding: 10px;
-    cursor: pointer;
-  }
-  .filled-button-red {
-    --btn-bg-color: red;
-  }
-  .filled-button-green {
-    --btn-bg-color: green;
-  }
-  .input-text {
-    width: 50px;
-    padding: 5px;
-  }
-  .container-gridflex {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-  }
-  .container-element, .container-element-clickable {
-    margin: 5px;
-  }
-  .button-text, .counter-text {
-    margin: 0;
-  }
-  </style>
-  
-    
+<style scoped>
+.stylized-text {
+  font-size: 24px;
+}
+.counter-text {
+  font-size: 18px;
+}
+.filled-button-red, .filled-button-green {
+  background-color: var(--btn-bg-color);
+  color: white;
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+}
+.filled-button-red {
+  --btn-bg-color: red;
+}
+.filled-button-green {
+  --btn-bg-color: green;
+}
+.input-text {
+  width: 50px;
+  padding: 5px;
+}
+.container-gridflex {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+.container-element, .container-element-clickable {
+  margin: 5px;
+}
+.button-text, .counter-text {
+  margin: 0;
+}
+</style>
