@@ -39,8 +39,20 @@ export default {
 <style scoped>
 .stock-list {
   display: flex;
-  flex-direction: column;
-  align-items: center;
+  flex-wrap: wrap;
   gap: 20px;
+  justify-content: center;
+}
+
+.stock-list > * {
+  flex: 1 1 calc(50% - 20px);
+  max-width: calc(50% - 20px);
+}
+
+@media (max-width: 600px) {
+  .stock-list > * {
+    flex: 1 1 100%;
+    max-width: 100%;
+  }
 }
 </style>

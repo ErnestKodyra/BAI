@@ -29,6 +29,7 @@
 import { ref } from 'vue';
 import { useStore } from '@/store';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -42,14 +43,12 @@ export default {
     const changePassword = async () => {
       const success = await store.changePassword(currentPassword.value, newPassword.value);
       if (success) {
-        successMessage.value = 'Password changed successfully';
-        errorMessage.value = '';
+        Swal.fire('Success!', 'Password changed successfully', 'success');
         setTimeout(() => {
           router.push('/profile');
         }, 2000);
       } else {
-        errorMessage.value = 'Failed to change password';
-        successMessage.value = '';
+        Swal.fire('Error!', 'Failed to change password', 'error');
       }
     };
 
@@ -63,3 +62,30 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+
+h1.stylized-text {
+  margin: 10px;
+  font-family: 'Newsreader';
+  color: black;
+  font-size: 3em;
+}
+
+.popup-content {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.input-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input-text {
+  margin: 10px 0; }
+
+.filled-button-green {
+  cursor: pointer;
+}
+</style>

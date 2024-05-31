@@ -42,7 +42,10 @@ onMounted(async () => {
   setInterval(async () => {
     const response = await fetchStock(stockSymbol);
     fetchedData.value = response.data.map((price) => {
-      return [price.date, price.open, price.high, price.low, price.close];
+      const date = new Date(price.date);
+      date.setTime(date.getTime() + 2 * 60 * 60 * 1000);
+
+      return [date, price.open, price.high, price.low, price.close];
     });
 
     dataTable.remove();

@@ -31,9 +31,6 @@ let stocks = [
         ]},
     { symbol: 'PYPL', prices: [
             { date: Date(), open: 220.00, high: 225.00, low: 215.00, close: 222.00 }
-        ]},
-    { symbol: 'NFLX', prices: [
-            { date: Date(), open: 480.00, high: 490.00, low: 470.00, close: 485.00 }
         ]}
 ];
 
@@ -50,9 +47,6 @@ stocks.forEach(stock => {
 
     setInterval(() => {
             const lastPrice = stock.prices[stock.prices.length - 1];
-            // console.log(stock.symbol);
-            // console.log(trend)
-            // console.log(lastPrice);
             const newPrice = generateNewPrice(lastPrice);
             stock.prices.push(newPrice);
             if (stock.prices.length > 500) {
@@ -138,6 +132,11 @@ stocks.forEach(stock => {
                 };
                 break;
         }
+
+        if (newPrice.close < 1) {
+            newPrice.close = 1;
+        }
+
         return newPrice;
     }
 });

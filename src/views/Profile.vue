@@ -1,6 +1,6 @@
 <template>
   <div class="profile-container">
-    <h2 class="stylized-text">Your profile</h2>
+    <h2 class="profile-title">Your profile</h2>
     <div v-if="user" class="user-details">
       <p class="regular-text">Email: {{ user.email }}</p>
     </div>
@@ -15,6 +15,7 @@
 import { computed } from 'vue';
 import { useStore } from '@/store';
 
+
 export default {
   setup() {
     const store = useStore();
@@ -28,16 +29,20 @@ export default {
 </script>
 
 <style scoped>
+
+.profile-title {
+  font-size: 2em;
+  font-family: Arial, sans-serif;
+  color: #4CAF50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
 .profile-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 20px;
-}
-
-.stylized-text {
-  font-size: 2em;
-  color: #333;
 }
 
 .user-details {

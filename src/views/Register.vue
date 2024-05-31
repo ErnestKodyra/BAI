@@ -26,6 +26,7 @@
 import { ref } from 'vue';
 import { useStore } from '@/store';
 import { useRouter } from 'vue-router';
+import Swal from 'sweetalert2';
 
 export default {
   setup() {
@@ -38,7 +39,7 @@ export default {
     const register = async () => {
       const success = await store.registerUser(email.value, password.value);
       if (!success) {
-        errorMessage.value = "Registration failed! Please try again.";
+        Swal.fire('Error!', 'Registration failed! Please try again.', 'error');
       } else {
         router.push('/portfolio');
       }
@@ -75,5 +76,9 @@ h1.stylized-text {
 .error-message {
   color: red;
   margin-top: 10px;
+}
+
+.filled-button-green {
+  cursor: pointer;
 }
 </style>
