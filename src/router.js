@@ -3,22 +3,15 @@ import Login from './views/Login.vue';
 import Register from './views/Register.vue';
 import Profile from './views/Profile.vue';
 import Portfolio from './views/Portfolio.vue';
-import Exchange from './views/Exchange.vue';
 import StockDetails from "@/views/StockDetails.vue";
 import StockList from './views/StockList.vue';
 import { auth } from './firebase.js';
 
 const routes = [
     {
-        path: '/',
-        name: 'Home',
-        component: StockList,
-        meta: { requiresAuth: true } // Assuming the home page should be protected
-    },
-    {
         path: '/login',
         name: 'Login',
-        component: Login
+        component: Login,
     },
     {
         path: '/register',
@@ -35,12 +28,6 @@ const routes = [
         path: '/portfolio',
         name: 'Portfolio',
         component: Portfolio,
-        meta: { requiresAuth: true }
-    },
-    {
-        path: '/exchange',
-        name: 'Exchange',
-        component: Exchange,
         meta: { requiresAuth: true }
     },
     {

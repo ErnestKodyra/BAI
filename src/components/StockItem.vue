@@ -58,12 +58,21 @@ export default {
     };
 
     const buyStock = async () => {
-      const totalCost = quantity.value * latestPrice.value.close;
-      if (store.userProfile.wallet >= totalCost) {
-        await updateStockHoldings(store.user.uid, props.symbol, quantity.value, store.userProfile.wallet - totalCost, 'buy');
-        store.fetchUserProfile();  // Refresh profile data
-      } else {
-        alert('Insufficient funds');
+      if (quantity.value > 0) {
+        const totalCost = quantity.value * latestPrice.value.close;
+        if (store.userProfile.wallet >= totalCost) {
+          await updateStockHoldings(
+            store.user.uid,
+            props.symbol,
+            quantity.value,
+            store.userProfile.wallet - totalCost,
+            'buy',
+            latestPrice.value.close
+          );
+          await store.fetchUserProfile();  // Refresh profile data
+        } else {
+          alert('Insufficient funds');
+        }
       }
     };
 
@@ -71,8 +80,15 @@ export default {
       const stock = store.userProfile.stocks.find(s => s.symbol === props.symbol);
       if (stock && stock.quantity >= quantity.value) {
         const totalValue = quantity.value * latestPrice.value.close;
-        await updateStockHoldings(store.user.uid, props.symbol, -quantity.value, store.userProfile.wallet + totalValue, 'sell');
-        store.fetchUserProfile();  // Refresh profile data
+        await updateStockHoldings(
+            store.user.uid,
+            props.symbol,
+            quantity.value,
+            store.userProfile.wallet + totalValue,
+            'sell',
+            latestPrice.value.close
+        );
+        await store.fetchUserProfile();  // Refresh profile data
       } else {
         alert('Insufficient stock quantity');
       }

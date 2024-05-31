@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from 'vue';
+/*import { ref, onMounted } from 'vue';
 import { fetchUserProfile } from '../api.js';
 
 export default {
@@ -32,5 +32,5 @@ export default {
 
     return { user };
   },
-};
+};*/
 </script>
