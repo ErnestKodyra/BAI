@@ -63,7 +63,7 @@ export default {
       if (quantity.value > 0) {
         const totalCost = quantity.value * latestPrice.value.close;
         if (store.userProfile.wallet >= totalCost) {
-          const purchaseDate = new Date(); // Current date and time
+          const purchaseDate = new Date();
           await updateStockHoldings(
             store.user.uid,
             props.symbol,
@@ -73,7 +73,7 @@ export default {
             latestPrice.value.close,
             purchaseDate
           );
-          await store.fetchUserProfile();  // Refresh profile data
+          await store.fetchUserProfile();
         } else {
           alert('Insufficient funds');
         }
@@ -91,9 +91,9 @@ export default {
           store.userProfile.wallet + totalValue,
           'sell',
           latestPrice.value.close,
-          new Date()  // Current date and time for the sell operation
+          new Date()
         );
-        await store.fetchUserProfile();  // Refresh profile data
+        await store.fetchUserProfile();
       } else {
         alert('Insufficient stock quantity');
       }

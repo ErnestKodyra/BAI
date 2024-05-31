@@ -77,7 +77,7 @@ export default {
     onMounted(async () => {
       await store.fetchUserProfile();
       fetchPrices();
-      setInterval(fetchPrices, 1000);  // Consider optimizing this interval
+      setInterval(fetchPrices, 1000);
     });
 
     const formatTimestamp = (timestamp) => {
