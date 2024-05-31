@@ -1,5 +1,5 @@
 import { db } from './firebase.js';
-import { doc, getDoc, updateDoc, setDoc, arrayUnion, arrayRemove } from 'firebase/firestore';
+import { doc, getDoc, updateDoc, setDoc, arrayUnion, arrayRemove, onSnapshot } from 'firebase/firestore';
 
 export const getUserProfile = async (userId) => {
     const docRef = doc(db, "users", userId);
@@ -56,4 +56,6 @@ export const updateStockHoldings = async (userId, stockSymbol, quantity, newWall
         console.log("No such user profile!");
     }
 };
+
+
 // Add more Firestore functions as needed
