@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>Your Portfolio</h1>
-    <p>Total Portfolio Value: ${{ totalPortfolioValue }}</p>
-    <p>Wallet Balance (Free Funds): ${{ userProfile.wallet }}</p>
-    <p>Total Investment (Funds Invested+Gain/Loss): ${{ amountInvested }}</p>
+    <p>Total Portfolio Value: ${{ totalPortfolioValue.toFixed(2) }}</p>
+    <p>Wallet Balance (Free Funds): ${{ userProfile.wallet.toFixed(2) }}</p>
+    <p>Total Investment (Funds Invested+Gain/Loss): ${{ amountInvested.toFixed(2) }}</p>
     <ul>
       <li v-for="stock in userProfile.stocks" :key="stock.symbol">
         {{ stock.symbol }} - Shares: {{ stock.quantity }}
-        - Current Price: ${{ getPrice(stock.symbol) }}
-        - Value: ${{ stock.quantity * getPrice(stock.symbol) }}
+        - Current Price: ${{ getPrice(stock.symbol).toFixed(2) }}
+        - Value: ${{ stock.quantity * getPrice(stock.symbol).toFixed(2) }}
       </li>
     </ul>
     <h2>Transaction History</h2>
@@ -17,6 +17,7 @@
         {{ transaction.type }} - {{ transaction.stockSymbol }}
         - Shares: {{ transaction.quantity }}
         - Price Per Share: ${{ transaction.pricePerShare }}
+        - Transaction Value: ${{ (transaction.quantity * transaction.pricePerShare).toFixed(2) }}
         - Date & Time: {{ formatTimestamp(transaction.timestamp) }}
       </li>
     </ul>

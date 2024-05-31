@@ -1,7 +1,7 @@
 <template>
   <div class="container-element">
     <h1 class="stylized-text">{{ symbol }}</h1>
-    <h4 class="counter-text">PLN {{ latestPrice ? latestPrice.close : 'Loading...' }}</h4>
+    <h4 class="counter-text">PLN {{ latestPrice ? latestPrice.close.toFixed(2) : 'Loading...' }}</h4>
     <div class="container-gridflex">
       <div class="container-element">
         <button @click="sellStock" class="filled-button-red">

@@ -17,7 +17,8 @@ export const useStore = defineStore('auth', {
           // Set initial data in Firestore
           const userData = {
             wallet: 1000,  // Set initial wallet balance
-            stocks: []     // Prepare for storing stock data
+            stocks: [],     // Prepare for storing stock data
+            transactions: []
           };
           
           await setDoc(doc(db, "users", this.user.uid), userData);
