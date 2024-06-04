@@ -47,7 +47,7 @@ export const useStore = defineStore('auth', {
       try {
         const response = await signInWithEmailAndPassword(auth, email, password);
         this.user = response.user;
-        await this.fetchUserProfile(); // Fetch user profile after login
+        await this.fetchUserProfile();
         return true;
       } catch (error) {
         console.error('Login Error:', error);
@@ -80,10 +80,8 @@ export const useStore = defineStore('auth', {
         const user = auth.currentUser;
         const credential = EmailAuthProvider.credential(user.email, currentPassword);
 
-        // Re-authenticate the user
         await reauthenticateWithCredential(user, credential);
 
-        // Update the password
         await updatePassword(user, newPassword);
 
         return true;

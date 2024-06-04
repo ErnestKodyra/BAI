@@ -15,7 +15,10 @@ let fetchedData = ref([]);
 onMounted(async () => {
   const response = await fetchStock(stockSymbol)
   fetchedData.value = response.data.map( (price) => {
-    return [price.date, price.open, price.high, price.low, price.close]
+      const date = new Date(price.date);
+      date.setTime(date.getTime() + 2 * 60 * 60 * 1000);
+
+      return [date, price.open, price.high, price.low, price.close];
   });
 
   var dataTable = anychart.data.table();
@@ -34,11 +37,11 @@ onMounted(async () => {
   chart.crosshair().xStroke("#00bfa5", 0.5, "10 5", "round");
   chart.crosshair().yStroke("#00bfa5", 0.5);
   chart.plot(0).priceIndicator({value: "last-visible"});
+  chart.selectRange('minute', 2, 'last-date', false);
   chart.container('chartContainer');
-  chart.preserveSelectedRangeOnDataUpdate(true)
 
   chart.draw();
-  
+
   setInterval(async () => {
     const response = await fetchStock(stockSymbol);
     fetchedData.value = response.data.map((price) => {
@@ -47,9 +50,9 @@ onMounted(async () => {
 
       return [date, price.open, price.high, price.low, price.close];
     });
-
-    dataTable.remove();
     dataTable.addData(fetchedData.value);
+    dataTable.mapAs();
+    chart.draw();
   }, 1000);
   });
 </script>
