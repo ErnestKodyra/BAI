@@ -3,34 +3,34 @@ const router = express.Router();
 
 let stocks = [
     { symbol: 'AAPL', prices: [
-        { date: Date(), open: 92.86, high: 93.05, low: 91.20, close: 91.55 },
+        { date: new Date().toISOString(), open: 92.86, high: 93.05, low: 91.20, close: 91.55 },
     ]},
     { symbol: 'TSL', prices: [
-        { date: Date(), open: 92.86, high: 93.05, low: 91.20, close: 91.55 }
+        { date: new Date().toISOString(), open: 92.86, high: 93.05, low: 91.20, close: 91.55 }
     ]},
     { symbol: 'ASS', prices: [
-        { date: Date(), open: 55.56, high: 57.01, low: 54.87, close: 56.33 }
+        { date: new Date().toISOString(), open: 55.56, high: 57.01, low: 54.87, close: 56.33 }
     ]},
     { symbol: 'GOOGL', prices: [
-            { date: Date(), open: 1000.00, high: 1005.00, low: 995.00, close: 1000.00 }
+            { date: new Date().toISOString(), open: 1000.00, high: 1005.00, low: 995.00, close: 1000.00 }
         ]},
     { symbol: 'MSFT', prices: [
-            { date: Date(), open: 210.00, high: 215.00, low: 205.00, close: 212.00 }
+            { date: new Date().toISOString(), open: 210.00, high: 215.00, low: 205.00, close: 212.00 }
         ]},
     { symbol: 'AMZN', prices: [
-            { date: Date(), open: 3100.00, high: 3150.00, low: 3050.00, close: 3120.00 }
+            { date: new Date().toISOString(), open: 3100.00, high: 3150.00, low: 3050.00, close: 3120.00 }
         ]},
     { symbol: 'FB', prices: [
-            { date: Date(), open: 250.00, high: 255.00, low: 245.00, close: 252.00 }
+            { date: new Date().toISOString(), open: 250.00, high: 255.00, low: 245.00, close: 252.00 }
         ]},
     { symbol: 'TSLA', prices: [
-            { date: Date(), open: 600.00, high: 610.00, low: 590.00, close: 605.00 }
+            { date: new Date().toISOString(), open: 600.00, high: 610.00, low: 590.00, close: 605.00 }
         ]},
     { symbol: 'NVDA', prices: [
-            { date: Date(), open: 500.00, high: 510.00, low: 490.00, close: 505.00 }
+            { date: new Date().toISOString(), open: 500.00, high: 510.00, low: 490.00, close: 505.00 }
         ]},
     { symbol: 'PYPL', prices: [
-            { date: Date(), open: 220.00, high: 225.00, low: 215.00, close: 222.00 }
+            { date: new Date().toISOString(), open: 220.00, high: 225.00, low: 215.00, close: 222.00 }
         ]}
 ];
 
